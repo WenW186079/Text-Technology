@@ -23,7 +23,7 @@ def classify_company_size(size):
         return size   
     
 def modify_data():
-    # Load the JSON file
+
     with open('tt_project_data_og.json') as file:
         data = json.load(file)
 
@@ -43,9 +43,6 @@ def modify_data():
         'PR': 'Puerto Rico', 'VI': 'Virgin Islands'
     }
 
-    
-
-    # Iterate over the documents and preprocess the salary estimate
     for document in data:
         salary_estimate = document.get('salary estimate')
 
@@ -122,18 +119,14 @@ def modify_data():
     # Filter out data with null monthly_salary
     data = [document for document in data if document.get('monthly_salary') is not None]
 
-            
-    # Save the updated JSON file
     with open('tt_project_data_modified.json', 'w') as file:
         json.dump(data, file, indent=4)
-
 
 
 # Helper function to convert JSON data to XML
 def json_to_xml(element, data):
     if isinstance(data, dict):
         for key, value in data.items():
-            # Handle specific case of "$oid" key
             if key == "$oid":
                 key = "oid"
                 
@@ -149,24 +142,18 @@ def json_to_xml(element, data):
             json_to_xml(sub_element, item)
 
 def encode_xml():
-    # Read the JSON file
     with open('tt_project_data_modified.json', 'r') as file:
         data = json.load(file)
 
-    # Create the root element of the XML tree
     root = ET.Element('data')
 
-    # Convert JSON data to XML
     json_to_xml(root, data)
 
-    # Create the XML tree
     tree = ET.ElementTree(root)
 
-    # Save the XML data to a file
     tree.write('tt_project_data.xml', encoding='utf-8', xml_declaration=True)
 
 def creating_xslt_file():
-    # Create the XSLT stylesheet
     xslt_stylesheet = '''<?xml version="1.0" encoding="UTF-8"?>
     <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:template match="/">
@@ -174,8 +161,6 @@ def creating_xslt_file():
         <head>
             <title>Job Listings</title>
             <style>
-            /* Add CSS styles for the webpage */
-            /* Example: */
             body {
                 font-family: Arial, sans-serif;
             }
@@ -239,8 +224,6 @@ def creating_xslt_file():
     </xsl:template>
     </xsl:stylesheet>
     '''
-
-    # Save the XSLT stylesheet to a file
     xslt_filename = 'tt_project_data.xslt'
     with open(xslt_filename, 'w') as f:
         f.write(xslt_stylesheet)
@@ -248,21 +231,17 @@ def creating_xslt_file():
     print(f"XSLT file '{xslt_filename}' created successfully.")
 
 def apply_xslt():
-    # Specify the file paths
     xml_file = "tt_project_data.xml"
     xslt_file = "tt_project_data.xslt"
     output_file = "tt_project_data.html"
-    # Parse the XML and XSLT files
+
     xml_doc = etree.parse(xml_file)
     xslt_doc = etree.parse(xslt_file)
 
-    # Create an XSLT transformer
     transformer = etree.XSLT(xslt_doc)
 
-    # Apply the transformation
     result_tree = transformer(xml_doc)
 
-    # Save the result as an HTML file
     result_tree.write(output_file, pretty_print=True)
 
 if __name__ == "__main__":
@@ -281,6 +260,5 @@ if __name__ == "__main__":
     creating_xslt_file()
     print('creating_xslt_file done')
     
-    # Apply the XSLT transformation
     apply_xslt()
     print('apply_xslt done')
