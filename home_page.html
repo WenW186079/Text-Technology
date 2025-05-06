@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page Switcher</title>
+  <style>
+    .button {
+      padding: 10px 20px;
+      background-color: #555;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin: 5px;
+    }
+    
+    .button:hover {
+      background-color: #777;
+    }
+    
+    .button.selected {
+      background-color: #b65de9f9; /* Update this to the desired color for the selected button */
+    }
+  </style>
+</head>
+<body>
+    <button class="button" onclick="loadPage(1)">All Dataset</button>
+    <button class="button" onclick="loadPage(2)">Naruto's salary</button>
+    <button class="button" onclick="loadPage(3)">Sakura's salary</button>
+    <button class="button" onclick="loadPage(4)">Sasuke's salary</button>
+    <button class="button" onclick="loadPage(5)">Query 1</button>
+    <button class="button" onclick="loadPage(6)">Query 2</button>
+    <button class="button" onclick="loadPage(7)">Query 3</button>
+    <button class="button" onclick="loadPage(8)">Query 4</button>
+    <button class="button" onclick="loadPage(9)">Query 5</button>
+    <button class="button" onclick="loadPage(10)">Query 6</button>
+    <button class="button" onclick="loadPage(11)">Query 7</button>
+    <button class="button" onclick="loadPage(12)">Query 8</button>
+  <!-- Add more buttons here -->
+
+  <div id="content"></div>
+
+  <script>
+    var buttons = document.getElementsByClassName('button');
+    var selectedButton = null;
+
+    function loadPage(pageNumber) {
+      if (selectedButton !== null) {
+        selectedButton.classList.remove('selected');
+      }
+
+      var button = buttons[pageNumber - 1];
+      button.classList.add('selected');
+      selectedButton = button;
+
+      var url = 'index' + pageNumber + '.html';
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById('content').innerHTML = this.responseText;
+        }
+      };
+      xhttp.open('GET', url, true);
+      xhttp.send();
+    }
+  </script>
+</body>
+</html>

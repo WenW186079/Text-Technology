@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="data">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="item" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="company" type="xs:string"/>
+              <xs:element name="location" type="xs:string"/>
+              <xs:element name="company_size" type="xs:string"/>
+              <xs:element name="company_type" type="xs:string"/>
+              <xs:element name="company_sector" type="xs:string"/>
+              <xs:element name="company_industry" type="xs:string"/>
+              <xs:element name="company_founded" type="xs:string"/>
+              <xs:element name="company_revenue" type="xs:string"/>
+              <xs:element name="monthly_salary" type="xs:decimal"/>
+              <xs:element name="number" type="xs:integer"/>
+              <xs:element name="job_title" type="xs:string"/>
+              <xs:element name="experience_level" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
